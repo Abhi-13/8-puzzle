@@ -101,9 +101,7 @@ struct comp
         return (lhs->cost + lhs->level) > (rhs->cost + rhs->level);
     }
 };
-int c2=0;
-void solve(int initial[N][N], int x, int y,
-           int final[N][N])
+void solve(int initial[N][N], int x, int y,int final[N][N])
 {
     priority_queue<Node*, std::vector<Node*>, comp> pq;
     Node* root = newNode(initial, x, y, x, y, 0, NULL);
@@ -111,12 +109,6 @@ void solve(int initial[N][N], int x, int y,
     pq.push(root);
     while (!pq.empty())
     {
-        c2++;
-        if(c2>1e6)
-        {
-            cout<<"impossible";
-             exit(0);
-        }
         Node* min = pq.top();
         pq.pop();
         if (min->cost == 0)
@@ -128,10 +120,7 @@ void solve(int initial[N][N], int x, int y,
         {
             if (isSafe(min->x + row[i], min->y + col[i]))
             {
-                Node* child = newNode(min->mat, min->x,
-                              min->y, min->x + row[i],
-                              min->y + col[i],
-                              min->level + 1, min);
+                Node* child = newNode(min->mat, min->x, min->y, min->x + row[i], min->y + col[i], min->level + 1, min);
                 child->cost = mainatomeCost(child->mat, final);
                 pq.push(child);
             }
@@ -159,10 +148,10 @@ bool isSolvable1(int initial[N][N])
             }
         }
     }
-    if(count%2==0)
-        return 1;
-    else
+    if(count%2==1)
         return 0;
+    else
+        return 1;
 }
 bool isSolvable2(int initial[N][N],int x)
 {
@@ -209,14 +198,14 @@ int main()
         }
     }
     int k=1;
-   for(int i=0;i<N;i++)
-   {
+    for(int i=0;i<N;i++)
+    {
         for(int j=0;j<N;j++)
         {
             final[i][j]=k;
             k++;
         }
-   }
+    }
     final[N-1][N-1]=0;
     if(N%2==1)
     {
@@ -232,7 +221,7 @@ int main()
     }
     else
     {
-         bool ans=isSolvable2(initial,N-x);
+        bool ans=isSolvable2(initial,N-x);
         if(ans==1)
         {
             solve(initial, x, y, final);
