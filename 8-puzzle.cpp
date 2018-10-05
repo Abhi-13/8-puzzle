@@ -166,28 +166,9 @@ bool isSolvable1(int initial[N][N])
 }
 bool isSolvable2(int initial[N][N],int x)
 {
-    vector<int> g;
-    for(int i=0;i<N;i++)
-    {
-        for(int j=0;j<N;j++)
-        {
-            g.push_back(initial[i][j]);
-        }
-    }
-    int count=0;
-    for(int i=0;i<g.size();i++)
-    {
-        for(int j=i+1;j<g.size();j++)
-        {
-            if(g[i] && g[j] && g[i]>g[j])
-            {
-                count++;
-            }
-        }
-    }
-    if(count%2==1 && x%2==0)
+    if(isSolvable(initial)==0 && x%2==0)
         return 1;
-    else if(count%2==0 && x%2==1)
+    else if(isSolvable(initial)==1 && x%2==1)
         return 1;
     else
         return 0;
