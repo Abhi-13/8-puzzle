@@ -41,7 +41,7 @@ int calculateCost(int initial[N][N], int final[N][N])
            count++;
     return count;
 }
-int mainatomeCost(int initial[N][N],int final[N][N])
+int manhattanCost(int initial[N][N],int final[N][N])
 {
     int count=0;
     int col1[N*N],row1[N*N],col2[N*N],row2[N*N];
@@ -132,7 +132,7 @@ void solve(int initial[N][N], int x, int y,
                               min->y, min->x + row[i],
                               min->y + col[i],
                               min->level + 1, min);
-                child->cost = mainatomeCost(child->mat, final);
+                child->cost = manhattanCost(child->mat, final);
                 pq.push(child);
             }
         }
